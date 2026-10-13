@@ -21,21 +21,3 @@ jobs:
 
     - name: Executar testes automatizados
       run: npm test
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Baixar código do repositório
-      uses: actions/checkout@v4
-
-    - name: Fazer o Deploy via SSH
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.SERVER_HOST }}     # IP do servidor
-        username: ${{ secrets.SERVER_USER }} # Usuário do servidor
-        key: ${{ secrets.SSH_PRIVATE_KEY }}  # Chave SSH Privada
-        script: |
-          cd /caminho/da/sua/aplicacao/no/servidor
-          git pull origin main
-          npm install --production
